@@ -69,5 +69,36 @@ namespace HelloWorldService.Tests
             //Assert.AreEqual(System.Net.HttpStatusCode.NoContent, postResult.StatusCode, "Status code was not NoContent");
             postResult.StatusCode.Should().Be("");
         }
+
+        [TestMethod]
+        public void TestDeleteContact()
+        {
+            // Create contact
+            // Figure out it's id
+
+            // Delete the contact with that id
+            var deleteResult = client.DeleteAsync("contacts/12345").Result;
+            deleteResult.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+
+            // Get that specific contact record
+            // Verify that it doesn't come back
+        }
+
+        [TestMethod]
+        public void TestGetSpecificContact()
+        {
+            // Delete the contact with that id
+            var getResult = client.GetAsync("contacts/100").Result;
+            getResult.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+
+            // deserialize the Content
+            var json = getResult.Content.ReadAsStringAsync().Result;
+
+            var contact = JsonConvert.DeserializeObject<Contact>(json);
+
+            contact.Should().NotBeNull();
+            contact.Name.Should().NotBeNullOrEmpty();
+        }
+
     }
 }
