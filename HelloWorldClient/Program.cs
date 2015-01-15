@@ -61,7 +61,7 @@ namespace HelloWorldClient
             
             var postResult = client.PostAsync("contacts", postContent).Result;
 
-            // SendAsync(client, HttpMethod.Post, "contacts", newJson);
+            SendAsync(client, HttpMethod.Post, "contacts", newContact);
            
             Console.WriteLine(postResult.StatusCode);
 
@@ -86,14 +86,18 @@ namespace HelloWorldClient
             Console.ReadLine();
         }
 
-        static HttpResponseMessage SendAsync(HttpClient client, HttpMethod method, string uri, string content)
+        public static HttpResponseMessage SendAsync(HttpClient client, HttpMethod method, string uri, object content)
         {
             HttpRequestMessage request = new HttpRequestMessage();
+
             request.Method = method;
-            request.RequestUri = new Uri(uri);
+            request.RequestUri = new Uri("http://localhost.fiddler:49270/api/" + uri);
+
             if (content != null)
             {
-                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+                var jsonString = JsonConvert.SerializeObject(content);
+
+                request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             }
 
             return client.SendAsync(request).Result;
