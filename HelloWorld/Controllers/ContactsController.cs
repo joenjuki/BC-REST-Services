@@ -16,28 +16,20 @@ namespace HelloWorld.Controllers
         public static List<Contact> contacts = new List<Contact>();
 
         // GET: api/Contacts
-        public IEnumerable<Contact> Get()
+        public ContactResponse Get()
         {
-            try
+            //int x = 1;
+            //x = x / (x - 1);
+            //return contacts;
+            return new ContactResponse
             {
-                int x = 1;
-                x = x / (x - 1);
-                return contacts;
-            }
-            catch (Exception ex)
-            {
-                var response = new
+                Header = new StandardResponseHeader { Status = "success", StatusList = null },
+
+                ResponseBody = new ContactResponseBody
                 {
-                    Status = "error",
-                    Message = ex.Message,
-                };
-                var httpResponseMessage = new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new ObjectContent(response.GetType(), response, new JsonMediaTypeFormatter())
-                };
-                throw new HttpResponseException(httpResponseMessage);
-            }
+                    Items = contacts.ToArray()
+                }
+            };
         }
 
         // GET: api/Contacts/5
