@@ -6,8 +6,14 @@ using Newtonsoft.Json;
 
 namespace HelloWorld.Models
 {
+    /// <summary>
+    /// Contact doc
+    /// </summary>
     public class Contact
     {
+        /// <summary>
+        /// Id doc
+        /// </summary>
         [JsonProperty("id")]
         public int Id { get; set; }
 

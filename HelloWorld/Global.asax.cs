@@ -12,7 +12,7 @@ namespace HelloWorld
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());
+            //GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());
         }
     }
 }

@@ -9,6 +9,8 @@ using System.Net.Http.Formatting;
 
 namespace HelloWorld.Controllers
 {
+    [Logging]
+    [ExcludeIPAddress]
     public class ContactsController : ApiController
     {
         private static int nextId = 100;

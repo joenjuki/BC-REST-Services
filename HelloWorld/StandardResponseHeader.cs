@@ -94,6 +94,9 @@ namespace HelloWorld
 
     public class ContactResponse : StandardResponse
     {
+        /// <summary>
+        /// Here's the documentation for contact-response-body
+        /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "contact-response-body")]
         public ContactResponseBody ResponseBody { get; set; }
     }
