@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using HelloWorld.Models;
+using System.Net.Http.Formatting;
 
 namespace HelloWorld.Controllers
 {
@@ -17,7 +18,26 @@ namespace HelloWorld.Controllers
         // GET: api/Contacts
         public IEnumerable<Contact> Get()
         {
-            return contacts;
+            try
+            {
+                int x = 1;
+                x = x / (x - 1);
+                return contacts;
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    Status = "error",
+                    Message = ex.Message,
+                };
+                var httpResponseMessage = new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new ObjectContent(response.GetType(), response, new JsonMediaTypeFormatter())
+                };
+                throw new HttpResponseException(httpResponseMessage);
+            }
         }
 
         // GET: api/Contacts/5
