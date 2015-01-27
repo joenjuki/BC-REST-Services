@@ -11,6 +11,7 @@ namespace HelloWorld.Controllers
 {
     [Logging]
     [ExcludeIPAddress]
+   // [Authenticator]
     public class ContactsController : ApiController
     {
         private static int nextId = 100;
@@ -34,10 +35,12 @@ namespace HelloWorld.Controllers
             };
         }
 
+        [Route("customers/{customerId}/{packageId}/orders")]
+        [HttpGet]
         // GET: api/Contacts/5
-        public Contact Get(int id)
+        public Contact Get(int customerId, string packageId)
         {
-            return contacts.SingleOrDefault(t => t.Id == id);
+            return contacts.SingleOrDefault(t => t.Id == customerId);
         }
 
         // POST: api/Contacts

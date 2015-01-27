@@ -43,6 +43,7 @@ namespace HelloWorldClient
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost.fiddler:49270/api/");
+            client.DefaultRequestHeaders.Add("x-parse-id", "");
 
             var newContact = new Contact
             {

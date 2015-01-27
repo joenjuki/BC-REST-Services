@@ -12,10 +12,16 @@ namespace HelloWorld
         public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
             var address = HttpContext.Current.Request.UserHostAddress;
+            
+            // SSL-Check
+            //if (actionContext.Request.RequestUri.Scheme != "https")
+            //{
+            //    throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+            //}
 
             if (address == "::1")
             {
-                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+               // throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
             }
 
             base.OnActionExecuting(actionContext);
