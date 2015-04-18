@@ -22,7 +22,7 @@ namespace HelloWorldService.Controllers
         // GET: api/Contacts/5
         public Contact Get(int id)
         {
-            var contact = contacts.SingleOrDefault(t => t.Id == id);
+            var contact = contacts.SingleOrDefault(t => t.CONTACTSID == id);
             return contact;
         }
 
@@ -31,14 +31,14 @@ namespace HelloWorldService.Controllers
         {
             if (value == null) return;
 
-            value.Id = nextId++;
+            value.CONTACTSID = nextId++;
             contacts.Add(value);
         }
 
         // PUT: api/Contacts/5
         public void Put(int id, [FromBody]Contact value)
         {
-            var contact = contacts.SingleOrDefault(t => t.Id == id);
+            var contact = contacts.SingleOrDefault(t => t.CONTACTSID == id);
             if (contact == null)
             {
                 Post(value);
@@ -60,7 +60,7 @@ namespace HelloWorldService.Controllers
         // DELETE: api/Contacts/5
         public void Delete(int id)
         {
-            contacts.RemoveAll(t => t.Id == id);
+            contacts.RemoveAll(t => t.CONTACTSID == id);
         }
     }
 }
