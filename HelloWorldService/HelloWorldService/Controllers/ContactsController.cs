@@ -10,7 +10,8 @@ namespace HelloWorldService.Controllers
 {
     public class ContactsController : ApiController
     {
-        public static List<Contact> contacts = new List<Contact>();
+        private static int nextId = 100;
+        private static List<Contact> contacts = new List<Contact>();
 
         // GET: api/Contacts
         public IEnumerable<Contact> Get()
@@ -21,22 +22,45 @@ namespace HelloWorldService.Controllers
         // GET: api/Contacts/5
         public Contact Get(int id)
         {
-            return null;
+            var contact = contacts.SingleOrDefault(t => t.Id == id);
+            return contact;
         }
 
         // POST: api/Contacts
         public void Post([FromBody]Contact value)
         {
+            if (value == null) return;
+
+            value.Id = nextId++;
+            contacts.Add(value);
         }
 
         // PUT: api/Contacts/5
         public void Put(int id, [FromBody]Contact value)
         {
+            var contact = contacts.SingleOrDefault(t => t.Id == id);
+            if (contact == null)
+            {
+                Post(value);
+            }
+            else
+            {
+                if (value.Name != null)
+                {
+                    contact.Name = value.Name;
+                }
+
+                if (value.Phones != null)
+                {
+                    contact.Phones = value.Phones;
+                }
+            }
         }
 
         // DELETE: api/Contacts/5
         public void Delete(int id)
         {
+            contacts.RemoveAll(t => t.Id == id);
         }
     }
 }
