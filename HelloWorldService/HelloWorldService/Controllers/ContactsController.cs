@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using HelloWorldService.Models;
+using Newtonsoft.Json;
 
 namespace HelloWorldService.Controllers
 {
@@ -27,12 +28,24 @@ namespace HelloWorldService.Controllers
         }
 
         // POST: api/Contacts
-        public void Post([FromBody]Contact value)
+        public HttpResponseMessage Post([FromBody]Contact value)
         {
-            if (value == null) return;
+            if (value == null) return null;
 
             value.CONTACTSID = nextId++;
             contacts.Add(value);
+
+            var result = new { Id = value.CONTACTSID, Candy = true };
+            
+            var newJson = JsonConvert.SerializeObject(result);
+
+            var postContent = new StringContent(newJson, System.Text.Encoding.UTF8, "application/json");
+
+            return new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = postContent
+            };
         }
 
         // PUT: api/Contacts/5
