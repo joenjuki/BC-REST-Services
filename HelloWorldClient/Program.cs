@@ -23,10 +23,10 @@ namespace HelloWorldClient
 
     public class Phone
     {
-        [JsonProperty("number")]
+        [JsonProperty("phone_number")]
         public string Number { get; set; }
 
-        [JsonProperty("phone-type")]
+        [JsonProperty("phone_type")]
         [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PhoneType PhoneType { get; set; }
     }
@@ -43,7 +43,7 @@ namespace HelloWorldClient
         {
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://localhost/helloworldservice/api/");
+            client.BaseAddress = new Uri("http://localhost/helloworldservice/api/contacts/");
 
             var newContact = new Contact
             {
@@ -55,15 +55,12 @@ namespace HelloWorldClient
                     }
                 }
             };
-
-            var newJson = JsonConvert.SerializeObject(newContact);
-            var postContent = new StringContent(newJson, System.Text.Encoding.UTF8, "application/json");
-            var postResult = client.PostAsync("contacts", postContent).Result;
+          
+            var postResult = SendAsync(client, HttpMethod.Post, newContact);
 
             Console.WriteLine(postResult.StatusCode);
 
-
-            var result = client.GetAsync("contacts").Result;
+            var result = SendAsync(client, HttpMethod.Get);
             var json = result.Content.ReadAsStringAsync().Result;
             Console.WriteLine(json);
 
@@ -71,7 +68,38 @@ namespace HelloWorldClient
 
             Console.WriteLine(obj[0].Id);
 
+            // Ex1. Add Delete
+            var deleteResult = DeleteContact(client, obj[0]);
+
             Console.ReadLine();
+        }
+
+        public static HttpResponseMessage DeleteContact(HttpClient client, Contact contact)
+        {
+            return SendAsync(client, HttpMethod.Delete, contact);
+        }
+
+        public static HttpResponseMessage SendAsync(HttpClient client, HttpMethod method, Contact contact = null)
+        {
+            var requestMessage = new HttpRequestMessage
+            {
+                Method = method,
+            };
+
+            if (method == HttpMethod.Post)
+            {
+                var newJson = JsonConvert.SerializeObject(contact);
+                var postContent = new StringContent(newJson, System.Text.Encoding.UTF8, "application/json");
+                requestMessage.Content = postContent;
+            }
+            if (method == HttpMethod.Delete)
+            {
+                requestMessage.RequestUri = new Uri( client.BaseAddress.ToString() + contact.Id);
+            }
+
+            var response = client.SendAsync(requestMessage).Result;
+
+            return response;
         }
     }
 }
