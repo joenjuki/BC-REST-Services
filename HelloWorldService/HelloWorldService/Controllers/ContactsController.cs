@@ -59,6 +59,7 @@ namespace HelloWorldService.Controllers
         }
     }
 
+    [System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ContactsController : ApiController
     {
         private static int nextId = 100;

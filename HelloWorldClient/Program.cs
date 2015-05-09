@@ -45,6 +45,8 @@ namespace HelloWorldClient
 
             client.BaseAddress = new Uri("http://localhost/helloworldservice/api/contacts/");
 
+            client.DefaultRequestHeaders.Add("Api-Key", "value");
+
             var newContact = new Contact
             {
                 Name = "New Name",
