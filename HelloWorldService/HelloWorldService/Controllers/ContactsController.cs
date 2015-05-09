@@ -64,7 +64,10 @@ namespace HelloWorldService.Controllers
         private static int nextId = 100;
         private static List<Contact> contacts = new List<Contact>();
 
-        // GET: api/Contacts
+        /// <summary>
+        /// This is what you need to do.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Contact> Get()
         {
             return contacts;

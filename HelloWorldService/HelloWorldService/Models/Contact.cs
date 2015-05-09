@@ -8,9 +8,15 @@ namespace HelloWorldService.Models
 {
     public class Contact
     {
+        /// <summary>
+        /// This is my ContactsId
+        /// </summary>
         [JsonProperty("id")]
         public int CONTACTSID { get; set; }
 
+        /// <summary>
+        /// The valid values for this are:fdjfdj
+        /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
 
